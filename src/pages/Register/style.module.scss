@@ -1,0 +1,45 @@
+.pass__fill {
+  padding: 14px 16px;
+  width: 100%;
+  font-family: "Noto Sans";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 12px;
+  border: 1px solid #fff;
+}
+
+.btn__click {
+  height: unset;
+  padding: unset;
+  color: unset;
+  box-shadow: unset;
+  border: unset;
+  width: 100%;
+  border-radius: 12px;
+  background: linear-gradient(
+    91deg,
+    #628eff 9.91%,
+    #8740cd 53.29%,
+    #580475 91.56%
+  );
+  color: #fff;
+  font-family: "Noto Sans";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  &:focus {
+    outline: unset;
+  }
+
+  span {
+    padding: 14px 10px;
+  }
+
+  &:hover {
+    background-color: #714899 !important;
+  }
+}

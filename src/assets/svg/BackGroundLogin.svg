@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1024" viewBox="0 0 1440 1024" fill="none">
+    <g clip-path="url(#clip0_1_62)">
+        <rect width="1440" height="1024" fill="#0F0F0F"/>
+
+
+        <circle cx="900" cy="232" r="151" fill="url(#paint0_linear_1_62)"/>
+        <circle cx="1319" cy="869" r="110" transform="rotate(-28.5 1319 869)" fill="url(#paint1_linear_1_62)"/>
+        <g filter="url(#filter0_bd_1_62)">
+
+
+            <g clip-path="url(#clip1_1_62)">
+
+
+            </g>
+            <g clip-path="url(#clip2_1_62)">
+
+
+            </g>
+
+
+        </g>
+
+    </g>
+    <defs>
+        <filter id="filter0_bd_1_62" x="846" y="60" width="588" height="904" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feGaussianBlur in="BackgroundImageFix" stdDeviation="26.5"/>
+            <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_1_62"/>
+            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+            <feOffset dx="-8" dy="4"/>
+            <feGaussianBlur stdDeviation="2.5"/>
+            <feComposite in2="hardAlpha" operator="out"/>
+            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.24 0"/>
+            <feBlend mode="normal" in2="effect1_backgroundBlur_1_62" result="effect2_dropShadow_1_62"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_1_62" result="shape"/>
+        </filter>
+        <linearGradient id="paint0_linear_1_62" x1="900" y1="81" x2="900" y2="383" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#530061"/>
+            <stop offset="1" stop-color="#0D0A30"/>
+        </linearGradient>
+        <linearGradient id="paint1_linear_1_62" x1="1319" y1="759" x2="1319" y2="979" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#300061"/>
+            <stop offset="1" stop-color="#0A1030"/>
+        </linearGradient>
+        <linearGradient id="paint2_linear_1_62" x1="1315.5" y1="910" x2="900" y2="598" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#BFBFBF" stop-opacity="0.31"/>
+            <stop offset="1" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="paint3_linear_1_62" x1="982.5" y1="114" x2="1289" y2="910" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#AFAFAF"/>
+            <stop offset="1" stop-color="#606060" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="paint4_linear_1_62" x1="1365" y1="910" x2="900" y2="599.5" gradientUnits="userSpaceOnUse">
+            <stop stop-color="white"/>
+            <stop offset="1" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="paint5_linear_1_62" x1="949" y1="447.25" x2="949" y2="460.75" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#7CC1F3"/>
+            <stop offset="1" stop-color="#D27EEF"/>
+        </linearGradient>
+        <linearGradient id="paint6_linear_1_62" x1="978.5" y1="511.274" x2="1306.63" y2="534.892" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#628EFF"/>
+            <stop offset="0.53125" stop-color="#8740CD"/>
+            <stop offset="1" stop-color="#580475"/>
+        </linearGradient>
+        <linearGradient id="paint7_linear_1_62" x1="1140" y1="833" x2="1140" y2="863" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#626262" stop-opacity="0"/>
+            <stop offset="1" stop-color="#626262" stop-opacity="0.5"/>
+        </linearGradient>
+        <clipPath id="clip0_1_62">
+            <rect width="1440" height="1024" fill="white"/>
+        </clipPath>
+        <clipPath id="clip1_1_62">
+            <rect width="42" height="42" fill="white" transform="translate(1059 660)"/>
+        </clipPath>
+        <clipPath id="clip2_1_62">
+            <rect width="42" height="42" fill="white" transform="translate(1119 660)"/>
+        </clipPath>
+    </defs>
+</svg>
