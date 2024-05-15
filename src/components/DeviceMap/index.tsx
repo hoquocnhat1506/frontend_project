@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./style.module.scss";
 import "leaflet/dist/leaflet.css";
-import L, { LatLngExpression, LeafletMouseEvent } from "leaflet";
+import L, { LatLngExpression, LeafletMouseEvent, Control } from "leaflet";
 import "leaflet-search/dist/leaflet-search.min.css";
 import "leaflet-search";
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
@@ -12,9 +12,6 @@ const DeviceMap: React.FC = () => {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const newMarkerRef = useRef<L.Marker | null>(null);
   const locationInfoRef = useRef<HTMLDivElement | null>(null);
-  const [selectedPosition, setSelectedPosition] =
-    useState<LatLngExpression | null>(null);
-  const [alertCircles, setAlertCircles] = useState<L.Circle[]>([]);
   const [mapInitCount, setMapInitCount] = useState(0);
 
   useEffect(() => {
@@ -31,16 +28,16 @@ const DeviceMap: React.FC = () => {
 
         L.tileLayer("https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}", {
           attribution: "&copy; Google Maps",
-        }).addTo(map);
+        }).addTo(map!);
 
-        L.control.zoom({ position: "topright" }).addTo(map);
+        L.control.zoom({ position: "topright" }).addTo(map!);
 
-        const geocoder = L.Control.Geocoder.nominatim();
-        const geocoderControl = L.Control.geocoder({
+        const geocoder = Control.Geocoder.nominatim();
+        const geocoderControl = Control.geocoder({
           geocoder: geocoder,
           collapsed: false,
           placeholder: "Search for a location...",
-        }).addTo(map);
+        }).addTo(map!);
 
         geocoderControl.on("markgeocode", function (event: any) {
           const { center, name, properties } = event.geocode;
@@ -78,7 +75,6 @@ const DeviceMap: React.FC = () => {
 
         map.on("click", (event: LeafletMouseEvent) => {
           const latlng = event.latlng;
-          setSelectedPosition(latlng);
 
           if (newMarkerRef.current) {
             map?.removeLayer(newMarkerRef.current);
@@ -102,31 +98,6 @@ const DeviceMap: React.FC = () => {
             iconLocationElement.alt = "Location Icon";
             locationInfoRef.current.appendChild(iconLocationElement);
           }
-
-          alertCircles.forEach((circle) => {
-            map?.removeLayer(circle);
-          });
-
-          // Draw new alert circles
-          const radius = 100; // 1km radius
-          const step = radius / 1;
-          const latLngs = [];
-
-          const measurement = 50; // đo mực nước: 50 cm
-          const colorsByMeasurement = getColorByMeasurement(measurement);
-
-          for (let i = 0; i < 1; i++) {
-            const color = colorsByMeasurement[i];
-            const circle = L.circle(latlng, {
-              color: color,
-              fillColor: color,
-              fillOpacity: 0.2,
-              radius: (i + 1) * step,
-            }).addTo(map!);
-            latLngs.push(circle);
-          }
-
-          setAlertCircles(latLngs);
         });
 
         setMapInitCount(1);
@@ -138,22 +109,7 @@ const DeviceMap: React.FC = () => {
         map.remove();
       }
     };
-  }, [alertCircles, mapInitCount]);
-
-  // Function to get color based on measurement
-  const getColorByMeasurement = (measurement: number): string[] => {
-    const colors: string[] = [];
-    if (measurement <= 5) {
-      colors.push("lightblue");
-    } else if (measurement <= 30) {
-      colors.push("yellow");
-    } else {
-      colors.push("red");
-    }
-    colors.push("yellow");
-    colors.push("red");
-    return colors;
-  };
+  }, [mapInitCount]);
 
   return (
     <div className={styles["map"]}>
