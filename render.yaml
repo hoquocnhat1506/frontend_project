@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: my-frontend
+    buildCommand: npm run build
+    env:
+      - key: PORT
+        value: 4001
+    routes:
+      - src: /
+        dest: /public
