@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./style.module.scss";
 import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression, LeafletMouseEvent } from "leaflet";
+import "leaflet-search/dist/leaflet-search.min.css";
 import "leaflet-search";
 import iconLocation from "../../assets/svg/iconLocation.png";
 
