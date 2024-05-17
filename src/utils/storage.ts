@@ -2,7 +2,7 @@ export const KEY_LOCAL_STORAGE = {
     ACCESS_TOKEN: 'access_token'
   };
   
-  export const saveLocalStorage = (name: string, payload: any) => {
+  export const saveLocalStorage = (name: string, payload: never) => {
     localStorage.setItem(name, payload);
   };
   

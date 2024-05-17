@@ -34,7 +34,7 @@ const Home = () => {
   console.log("username", username);
   function logout() {
     localStorage.clear();
-    window.location.href = "http://localhost:4000";
+    window.location.href = "http://localhost:4001/login";
   }
 
   const items = [

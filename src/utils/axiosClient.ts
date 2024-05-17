@@ -4,34 +4,28 @@ const apiURL = import.meta.env.VITE_API_URL;
 
 const axiosClient = axios.create({
   baseURL: apiURL,
-  timeout: 30000
+  timeout: 30000,
 });
 
 axiosClient.interceptors.request.use(
-  function (config) {
-    if (localStorage.getItem('accessToken')) {
-      config.headers['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
+  (config) => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
     }
     return config;
   },
-  function (error) {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 axiosClient.interceptors.response.use(
-  (res) => res,
-  async (err) => {
-    const originalConfig = err.config;
-    if (
-      originalConfig?.url !== '/v1/auth/login' &&
-      err.response &&
-      err.response.status === 401
-    ) {
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
       localStorage.clear();
       window.location.href = '/login';
     }
-    return Promise.reject(err);
+    return Promise.reject(error);
   }
 );
 
