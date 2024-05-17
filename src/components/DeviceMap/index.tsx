@@ -24,8 +24,9 @@ const DeviceMap: React.FC = () => {
 
         map = L.map(mapContainer.current!).setView(userLocation, 12);
 
-        L.tileLayer("https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}", {
-          attribution: "&copy; Google Maps",
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(map!);
 
         L.control.zoom({ position: "topright" }).addTo(map!);
