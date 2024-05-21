@@ -11,6 +11,7 @@ const DeviceMap: React.FC = () => {
   const newMarkerRef = useRef<L.Marker | null>(null);
   const locationInfoRef = useRef<HTMLDivElement | null>(null);
   const [mapInitCount, setMapInitCount] = useState(0);
+  const [alertCircles, setAlertCircles] = useState<L.Circle[]>([]);
 
   useEffect(() => {
     let map: L.Map | null = null;
@@ -56,6 +57,28 @@ const DeviceMap: React.FC = () => {
             iconLocationElement.alt = "Location Icon";
             locationInfoRef.current.appendChild(iconLocationElement);
           }
+          alertCircles.forEach((circle) => {
+            map?.removeLayer(circle);
+          });
+          const radius = 100; // 1km radius
+          const step = radius / 1;
+          const latLngs = [];
+
+          const measurement = 50; // đo mực nước: 50 cm
+          const colorsByMeasurement = getColorByMeasurement(measurement);
+
+          for (let i = 0; i < 1; i++) {
+            const color = colorsByMeasurement[i];
+            const circle = L.circle(latlng, {
+              color: color,
+              fillColor: color,
+              fillOpacity: 0.2,
+              radius: (i + 1) * step,
+            }).addTo(map!);
+            latLngs.push(circle);
+          }
+
+          setAlertCircles(latLngs);
         });
 
         setMapInitCount(1);
@@ -67,7 +90,21 @@ const DeviceMap: React.FC = () => {
         map.remove();
       }
     };
-  }, [mapInitCount]);
+  }, [alertCircles, mapInitCount]);
+
+  const getColorByMeasurement = (measurement: number): string[] => {
+    const colors: string[] = [];
+    if (measurement <= 5) {
+      colors.push("lightblue");
+    } else if (measurement <= 30) {
+      colors.push("yellow");
+    } else {
+      colors.push("red");
+    }
+    colors.push("yellow");
+    colors.push("red");
+    return colors;
+  };
 
   return (
     <div className={styles["map"]}>
