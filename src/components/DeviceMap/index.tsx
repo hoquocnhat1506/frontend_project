@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./style.module.scss";
+import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression, LeafletMouseEvent } from "leaflet";
+import "leaflet-search/dist/leaflet-search.min.css";
 import "leaflet-search";
 import iconLocation from "../../assets/svg/iconLocation.png";
 
@@ -9,6 +11,8 @@ const DeviceMap: React.FC = () => {
   const newMarkerRef = useRef<L.Marker | null>(null);
   const locationInfoRef = useRef<HTMLDivElement | null>(null);
   const [mapInitCount, setMapInitCount] = useState(0);
+  const [selectedPosition, setSelectedPosition] =
+    useState<LatLngExpression | null>(null);
   const [alertCircles, setAlertCircles] = useState<L.Circle[]>([]);
 
   useEffect(() => {
@@ -32,6 +36,7 @@ const DeviceMap: React.FC = () => {
 
         map.on("click", (event: LeafletMouseEvent) => {
           const latlng = event.latlng;
+          setSelectedPosition(latlng);
 
           if (newMarkerRef.current) {
             map?.removeLayer(newMarkerRef.current);
@@ -89,7 +94,6 @@ const DeviceMap: React.FC = () => {
       }
     };
   }, [alertCircles, mapInitCount]);
-
   const getColorByMeasurement = (measurement: number): string[] => {
     const colors: string[] = [];
     if (measurement <= 5) {
