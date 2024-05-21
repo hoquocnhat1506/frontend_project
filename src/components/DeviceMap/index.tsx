@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./style.module.scss";
 import "leaflet/dist/leaflet.css";
-import L, { LatLngExpression, LeafletMouseEvent } from "leaflet";
+import L, { LatLngExpression, LeafletMouseEvent, Map } from "leaflet";
 import "leaflet-search/dist/leaflet-search.min.css";
 import "leaflet-search";
 import iconLocation from "../../assets/svg/iconLocation.png";
@@ -10,103 +10,67 @@ const DeviceMap: React.FC = () => {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const newMarkerRef = useRef<L.Marker | null>(null);
   const locationInfoRef = useRef<HTMLDivElement | null>(null);
-  const [mapInitCount, setMapInitCount] = useState(0);
-  const [selectedPosition, setSelectedPosition] =
-    useState<LatLngExpression | null>(null);
-  const [alertCircles, setAlertCircles] = useState<L.Circle[]>([]);
+  const mapInstance = useRef<Map | null>(null); // Sử dụng Map từ L của Leaflet
 
   useEffect(() => {
-    let map: L.Map | null = null;
-
-    if (mapContainer.current && mapInitCount === 0) {
+    if (mapContainer.current && !mapInstance.current) {
       navigator.geolocation.getCurrentPosition((position) => {
         const userLocation: LatLngExpression = [
           position.coords.latitude,
           position.coords.longitude,
         ];
 
-        map = L.map(mapContainer.current!).setView(userLocation, 12);
-
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        }).addTo(map!);
-
-        L.control.zoom({ position: "topright" }).addTo(map!);
-
-        map.on("click", (event: LeafletMouseEvent) => {
-          const latlng = event.latlng;
-          setSelectedPosition(latlng);
-
-          if (newMarkerRef.current) {
-            map?.removeLayer(newMarkerRef.current);
-          }
-
-          const newMarkerIcon = L.icon({
-            iconUrl: "http://maps.google.com/mapfiles/ms/micons/blue-dot.png",
-            iconSize: [32, 32],
-            iconAnchor: [16, 32],
-          });
-
-          const newMarker = L.marker(latlng, { icon: newMarkerIcon }).addTo(
-            map!
+        // Kiểm tra xem bản đồ đã được khởi tạo chưa
+        if (!mapInstance.current) {
+          mapInstance.current = L.map(mapContainer.current!).setView(
+            userLocation,
+            12
           );
-          newMarkerRef.current = newMarker;
 
-          if (locationInfoRef.current) {
-            locationInfoRef.current.innerHTML = `Lat: ${latlng.lat}, Long: ${latlng.lng}`;
-            const iconLocationElement = document.createElement("img");
-            iconLocationElement.src = iconLocation;
-            iconLocationElement.alt = "Location Icon";
-            locationInfoRef.current.appendChild(iconLocationElement);
-          }
-          alertCircles.forEach((circle) => {
-            map?.removeLayer(circle);
+          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution:
+              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          }).addTo(mapInstance.current);
+
+          L.control.zoom({ position: "topright" }).addTo(mapInstance.current);
+
+          mapInstance.current.on("click", (event: LeafletMouseEvent) => {
+            const latlng = event.latlng;
+
+            if (newMarkerRef.current) {
+              mapInstance.current?.removeLayer(newMarkerRef.current);
+            }
+
+            const newMarkerIcon = L.icon({
+              iconUrl: "http://maps.google.com/mapfiles/ms/micons/blue-dot.png",
+              iconSize: [32, 32],
+              iconAnchor: [16, 32],
+            });
+
+            const newMarker = L.marker(latlng, { icon: newMarkerIcon }).addTo(
+              mapInstance.current!
+            );
+            newMarkerRef.current = newMarker;
+
+            if (locationInfoRef.current) {
+              locationInfoRef.current.innerHTML = `Lat: ${latlng.lat}, Long: ${latlng.lng}`;
+              const iconLocationElement = document.createElement("img");
+              iconLocationElement.src = iconLocation;
+              iconLocationElement.alt = "Location Icon";
+              locationInfoRef.current.appendChild(iconLocationElement);
+            }
           });
-          const radius = 100; // 1km radius
-          const step = radius / 1;
-          const latLngs = [];
-
-          const measurement = 50; // đo mực nước: 50 cm
-          const colorsByMeasurement = getColorByMeasurement(measurement);
-
-          for (let i = 0; i < 1; i++) {
-            const color = colorsByMeasurement[i];
-            const circle = L.circle(latlng, {
-              color: color,
-              fillColor: color,
-              fillOpacity: 0.2,
-              radius: (i + 1) * step,
-            }).addTo(map!);
-            latLngs.push(circle);
-          }
-
-          setAlertCircles(latLngs);
-        });
-
-        setMapInitCount(1);
+        }
       });
     }
 
     return () => {
-      if (map) {
-        map.remove();
+      if (mapInstance.current) {
+        mapInstance.current.remove();
+        mapInstance.current = null;
       }
     };
-  }, [alertCircles, mapInitCount]);
-  const getColorByMeasurement = (measurement: number): string[] => {
-    const colors: string[] = [];
-    if (measurement <= 5) {
-      colors.push("lightblue");
-    } else if (measurement <= 30) {
-      colors.push("yellow");
-    } else {
-      colors.push("red");
-    }
-    colors.push("yellow");
-    colors.push("red");
-    return colors;
-  };
+  }, []);
 
   return (
     <div className={styles["map"]}>

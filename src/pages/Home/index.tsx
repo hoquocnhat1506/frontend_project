@@ -31,7 +31,6 @@ const Home = () => {
     fetchUser();
   }, []);
 
-  console.log("username", username);
   function logout() {
     localStorage.clear();
     window.location.href = "http://localhost:4001/login";
