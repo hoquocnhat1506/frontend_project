@@ -1,16 +1,16 @@
-import { Alert } from "antd";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import React from "react";
+import CustomTable from "../DeviceMap/CustomTable";
+import { Device } from "../../types";
 
-const Warning = () => {
+interface WarningProps {
+  devices: Device[];
+}
+
+const Warning: React.FC<WarningProps> = ({ devices }) => {
   return (
-    <Alert
-      message="Cảnh báo ngập lụt!"
-      description="Mức độ nguy cơ cao. Hãy cẩn thận và thực hiện các biện pháp phòng ngừa."
-      type="error"
-      showIcon
-      icon={<ExclamationCircleOutlined />}
-      closable
-    />
+    <div className="warning-container">
+      <CustomTable devices={devices} />
+    </div>
   );
 };
 

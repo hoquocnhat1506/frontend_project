@@ -13,10 +13,12 @@ import DeviceMap from "../../components/DeviceMap";
 import Warning from "../../components/Warning";
 import axios from "axios";
 import EnvironmentChart from "../../components/EnvironmentChart";
+import { Device } from "../../types";
 
 const Home = () => {
   const [selectedSubItem, setSelectedSubItem] = useState<string>("Bản đồ");
   const [username, setUsername] = useState<string>("");
+  const [devices, setDevices] = useState<Device[]>([]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -80,9 +82,9 @@ const Home = () => {
   const renderContent = (): JSX.Element | null => {
     switch (selectedSubItem) {
       case "Bản đồ":
-        return <DeviceMap />;
+        return <DeviceMap setDevices={setDevices} />;
       case "Cảnh báo":
-        return <Warning />;
+        return <Warning devices={devices} />;
       case "Biểu đồ":
         return <EnvironmentChart />;
       default:
