@@ -14,6 +14,7 @@ import Warning from "../../components/Warning";
 import axios from "axios";
 import EnvironmentChart from "../../components/EnvironmentChart";
 import { Device } from "../../types";
+import ZaloShareButton from "../../components/ShareButtonZalo";
 
 const Home = () => {
   const [selectedSubItem, setSelectedSubItem] = useState<string>("Bản đồ");
@@ -87,6 +88,8 @@ const Home = () => {
         return <Warning devices={devices} />;
       case "Biểu đồ":
         return <EnvironmentChart />;
+      case "Chia sẻ":
+        return <ZaloShareButton />;
       default:
         return null;
     }
