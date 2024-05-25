@@ -38,7 +38,10 @@ const DeviceMap: React.FC<DeviceMapProps> = ({ setDevices }) => {
 
   const fetchDevices = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/v1/device");
+      //const response = await axios.get("http://localhost:8000/v1/device");//
+      const response = await axios.get(
+        "https://backend-project-xm9m.onrender.com/v1/device/"
+      ); //deploy link api
       const devices: Device[] = response.data.result;
       setDevices(devices);
       devices.forEach((device: Device) => {
