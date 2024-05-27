@@ -4,7 +4,7 @@ import {
   UserOutlined,
   EnvironmentOutlined,
   AlertOutlined,
-  LineChartOutlined,
+  // LineChartOutlined,
   ShareAltOutlined,
 } from "@ant-design/icons";
 import classNames from "classnames";
@@ -60,13 +60,13 @@ const Home = () => {
       subItems: [],
       href: "",
     },
-    {
-      icon: <LineChartOutlined />,
-      label: "Biểu đồ",
-      des: "",
-      subItems: [],
-      href: "",
-    },
+    // {
+    //   icon: <LineChartOutlined />,
+    //   label: "Biểu đồ",
+    //   des: "",
+    //   subItems: [],
+    //   href: "",
+    // },
     {
       icon: <ShareAltOutlined />,
       label: "Chia sẻ",
